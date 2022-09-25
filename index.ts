@@ -1,4 +1,7 @@
+// run puppeteer on VC2 https://github.com/alixaxel/chrome-aws-lambda/issues/164#issuecomment-754621407
+
 import puppeteer from 'puppeteer';
+import express from 'express';
 
 (async () => {
     const browser = await puppeteer.launch({
@@ -16,4 +19,13 @@ import puppeteer from 'puppeteer';
 })();
 
 
+const app = express();
 
+app.get('/', (req: any, res: any) => {
+    res.send('This is a test web page!');
+})
+
+app.listen(3000, () => {
+    console.log('The application is listening on port 3000!');
+})
+    
