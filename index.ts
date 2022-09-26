@@ -13,14 +13,26 @@ app.get('/getData', async (req: any, res: any) => {
   const page = await browser.newPage()
   await page.goto('https://www.binance.com/en/trade/BUSD_TRY?theme=dark&type=spot')
 
-  const delta = await page.evaluate(() => {
+  const alpha = await page.evaluate(() => {
     return document.querySelectorAll('#__APP > div.css-4pd5zw > div > div.css-1cpzhey > div > div > div.left > div > div.nowPrice > div.subPrice')[0].textContent
   })
 
-  console.dir(delta)
   await browser.close()
 
-  res.send(delta)
+  if (!alpha) return res.status(400).json({ error: 'error' })
+
+  const beta = alpha.substring(1, alpha.length)
+  const teta = parseFloat(beta)
+
+  console.dir(alpha)
+  console.dir(beta)
+  console.log(teta)
+  
+  if (teta > 1.01) {
+    return res.status(200).json({ alarm: true })
+  } else {
+    return res.status(200).json({ alarm: false })
+  }
 })
 
 app.listen(3000, () => {
