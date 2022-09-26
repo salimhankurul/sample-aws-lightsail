@@ -6,6 +6,7 @@ import express from 'express';
 const app = express()
 
 app.get('/getData', async (req: any, res: any) => {
+  console.log(`Received request for ${req.url} at ${new Date().toUTCString()}`);
   const browser = await puppeteer.launch({
     headless: true,
     args: ['--no-sandbox'],
@@ -29,8 +30,10 @@ app.get('/getData', async (req: any, res: any) => {
   console.log(teta)
   
   if (teta > 1.01) {
+    console.log(`Alarm true`);
     return res.status(200).json({ alarm: true })
   } else {
+    console.log(`Alarm false`);
     return res.status(200).json({ alarm: false })
   }
 })
